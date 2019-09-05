@@ -18,14 +18,14 @@ void setup(){
   pinMode(LED,OUTPUT);
   digitalWrite(LED,1);
   DigiMouse.begin();
-  DigiMouse.delay(1000);
+  DigiMouse.delay(200);
   randomSeed(100);
 }
 //------------------------------------------------------
 void Ledflash()
 {
   digitalWrite(LED,1);    
-  DigiMouse.delay(250);
+  DigiMouse.delay(210);
   digitalWrite(LED,0);
 }
 //------------------------------------------------------
@@ -73,7 +73,7 @@ void GoDir(u8 dir, u8 spd)
 void Jiggle(void)
 {
       GoDir(4,1);
-      DigiMouse.delay(250);
+      DigiMouse.delay(210);
       GoDir(7,1);
       Ledflash();
 }
