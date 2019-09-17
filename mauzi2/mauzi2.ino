@@ -13,6 +13,11 @@ typedef unsigned long  u32;
 //Generate new percentage every NEWPERC sec.
 #define NEWPERC  180
 
+//Visible Jiggle time (s)
+#define JIGT 2
+
+u32 timm2;
+
 //------------------------------------------------------
 void setup(){
   pinMode(LED,OUTPUT);
@@ -78,6 +83,14 @@ void Jiggle(void)
       Ledflash();
 }
 //------------------------------------------------------
+void Jiggle0(void)
+{
+      GoDir(4,1);
+      DigiMouse.delay(210);
+      GoDir(7,1);
+      Ledflash();
+}
+//------------------------------------------------------
 void loop()
 {
 u16 x, per;
@@ -89,11 +102,19 @@ u32 timm;
     for(x=0;x<10;x++) GoDir(3,4);
   
     timm=millis();
+    timm2=timm;
     per=PERCMIN+random(PERCMAX-PERCMIN+1);
     
     while(1)
     {
-      for(x=0;x<per;x++) Jiggle();
+      for(x=0;x<per;x++) 
+      {
+        if((millis()-timm2)< 1000*JIGT)
+        {       
+          Jiggle();
+        }
+        else Jiggle0();
+      }
       for(x=0;x<(100-per);x++) DigiMouse.delay(500);
       if((millis()-timm) > 1000*NEWPERC)
       {
@@ -101,6 +122,7 @@ u32 timm;
               timm=millis();
               Ledflash();
       }
+      timm2=millis();
     }
 }
 //------------------------------------------------------
